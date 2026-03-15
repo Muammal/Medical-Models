@@ -1,66 +1,36 @@
-MedicHub – AI Skin Disease Detector
+# Project Title
 
-Welcome to MedicHub, your friendly AI dermatologist!
-Upload a picture of a skin condition, get a disease prediction, and even ask questions about it – all running locally (no cloud servers required 😎).
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Features 🚀
+## Features
+- Feature 1
+- Feature 2
+- Feature 3
 
-Vision Model: Detects skin diseases from images using dinov2-base-finetuned-SkinDisease.
+## Installation
 
-Local LLM: Provides detailed explanations and answers questions about the detected disease.
+To install this project, run the following command:
 
-FastAPI Server: Turns your model into a local API for websites or apps.
+```bash
+pip install project-name
+```
 
-100% Offline Option: No Groq or external API required.
+## Usage
 
-MedicHub/
-│
-├── main.py              # CLI terminal app
-├── vision_model.py      # Skin disease classifier
-├── llm_module.py        # Local LLM handler
-├── api_server.py        # FastAPI server for web
-└── requirements.txt     # Python dependencies
+After installation, you can use the project like this:
 
-🛠 Installation
-
-Clone the repo:
-
-git clone https://github.com/yourusername/medichub.git
-cd medichub
-
-Create a virtual environment:
-
-python -m venv .venv
-source .venv/bin/activate      # Linux / macOS
-.venv\Scripts\activate         # Windows
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Download your local LLM (Ollama example):
-
-ollama pull llama3
-⚡ Running the Apps
-1️⃣ Terminal Mode
+```bash
 python main.py
+```
 
-Follow the prompts:
+## Contributing
 
-Enter path to skin image: images/acne.jpg
-Detected Disease: Acne
-Explanation: Acne is caused by...
-Ask questions: "What causes it?" → MedicHub answers!
+We welcome contributions! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
 
-2️⃣ API Mode (For Web)
+## Support
 
-Start the FastAPI server:
+For support, please open an issue or contact us at support@example.com.
 
-uvicorn api_server:app --reload
-
-API response example:
-
-{
-  "predicted_disease": "Eczema",
-  "llm_explanation": "Eczema is a chronic inflammatory skin condition..."
-}
+## Roadmap
+- Feature 1 will be enhanced.
+- More documentation will be added.
