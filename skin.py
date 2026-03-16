@@ -25,7 +25,7 @@ def predict_skin_disease(image_path):
     return predicted_label
 
 # Test run if executed directly
-if __name__ == "__skin__":
+if __name__ == "__main__":
 
     image_path = input("Enter image path: ")
     disease = predict_skin_disease(image_path)
