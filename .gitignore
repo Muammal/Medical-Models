@@ -1,0 +1,10 @@
+__pycache__/
+.venv/
+static/cams/*.jpg
+static/cams/*.png
+*.log
+test_results.txt
+test_results_v2.txt
+traceback_results.txt
+final_test.jpg
+test_input.jpg
