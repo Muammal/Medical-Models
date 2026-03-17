@@ -1,47 +1,62 @@
-from fastapi import FastAPI, UploadFile, File
-from fastapi.middleware.cors import CORSMiddleware
-from PIL import Image
-import io
-import tempfile
+# main.py
+
 from skin import predict_skin_disease
+from brain import predict_brain_tumor
+from xray import analyze_cxr
 from llm import get_disease_info
 
-app = FastAPI(title="Medic Hub AI API")
 
-# Enable website access
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # change later to your website domain
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+def run_model(model_name: str, image_path: str):
 
-@app.get("/")
-def home():
-    return {"message": "Medic Hub API running locally"}
+    model_name = model_name.lower()
 
-@app.post("/analyze")
-async def analyze_skin_image(file: UploadFile = File(...)):
+    # -----------------------------
+    # SKIN MODEL
+    # -----------------------------
+    if model_name == "skin":
 
-    # Read uploaded image
-    image_bytes = await file.read()
+        disease = predict_skin_disease(image_path)
 
-    # Convert to PIL image
-    image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+        explanation = get_disease_info(disease)
 
-    # Save temporarily
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as tmp:
-        image.save(tmp.name)
-        temp_path = tmp.name
+        return {
+            "model": "skin",
+            "prediction": disease,
+            "explanation": explanation
+        }
 
-    # Run vision model
-    predicted_disease = predict_skin_disease(temp_path)
+    # -----------------------------
+    # BRAIN MRI MODEL
+    # -----------------------------
+    elif model_name == "brain":
 
-    # Run local LLM
-    disease_info = get_disease_info(predicted_disease)
+        result = predict_brain_tumor(image_path)
 
-    return {
-        "predicted_disease": predicted_disease,
-        "llm_explanation": disease_info
-    }
+        explanation = get_disease_info(result["class"])
+
+        return {
+            "model": "brain",
+            "prediction": result,
+            "explanation": explanation
+        }
+
+    # -----------------------------
+    # CHEST X-RAY MODEL
+    # -----------------------------
+    elif model_name == "cxr":
+
+        result = analyze_cxr(image_path)
+
+        return {
+            "model": "cxr",
+            "prediction": result["analysis"]
+        }
+
+    # -----------------------------
+    # INVALID MODEL
+    # -----------------------------
+    else:
+
+        return {
+            "error": "Invalid model name. Use: skin | brain | cxr"
+        }
